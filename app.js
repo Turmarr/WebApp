@@ -12,7 +12,6 @@ if (Deno.args.length > 0) {
 }
 const server = serve({ port: port });
 
-const server = serve({ port: 7777 });
 
 const executeQuery = async(query, ...args) => {
     let res = [];
