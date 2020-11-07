@@ -1,15 +1,14 @@
-<h1>Names!</h1>
-<form method="POST">
-    <input type="text" name="name" />
-    <input type="submit" value="Submit!" />
+<h1>Messages</h1>
+<form method="POST" action='/'>
+    <input type="text" name="sender" />
+    <input type="text" name="message" />
+    <input type="submit" value="Send" />
 </form>
-<ul>
-    <% names.forEach((obj) => { %>
-        <li>
-            <%= obj.name %>
-            <form method="POST" action="/names/<%= obj.id %>/delete">
-                <input type="submit" value="Delete" />
-            </form>
-        </li>
+
+<table>
+    <% messages.forEach((obj) => { %>
+        <p>
+            <%= obj.sender %>: <%= obj.message %>
+        </p>
     <% }); %>
-</ul>
+</table>
