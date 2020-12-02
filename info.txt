@@ -1,0 +1,37 @@
+The behavior reported to the application are as follows:
+
+    Sleep duration and sleep quality
+    Time spent on sports and exercise
+    Time spent studying
+    Regularity and quality of eating
+    Generic mood
+
+Reporting morning and evening
+
+When choosing morning, the application asks for the sleep duration and 
+sleep quality, as well as generic mood. Sleep duration is given as a 
+decimal indicating hours slept, and sleep quality and generic mood 
+are given using a scale from 1 to 5, where 1 indicates very poor 
+and 5 indicates excellent.
+
+When choosing evening, the application asks for time spent on sports 
+and exercise, time spent studying, regularity and quality of eating, 
+and generic mood. Time spent on sports and exercise, and time spent 
+studying are given as a decimal number indicating the number of hours. 
+Regularity and quality of eating as well as the generic mood are given 
+using a scale from 1 to 5, where 1 indicates very poor and 5 indicates 
+excellent.
+
+Assumes current day / previous night
+    - can be overridden
+
+
+The application provides functionality for summarization of responses. 
+Each user can view statistics of their reports on a weekly and monthly level. 
+These statistics are as follows.
+
+    Average sleep duration
+    Average time spent on sports and exercise
+    Average time spent studying
+    Average sleep quality
+    Average generic mood
