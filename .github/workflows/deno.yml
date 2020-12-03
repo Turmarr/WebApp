@@ -2,8 +2,7 @@ name: Run tests on project
 
 on:
   push:
-    branches: [main]
-
+    
 jobs:
   test:
     runs-on: ubuntu-latest
