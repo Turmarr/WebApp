@@ -3,9 +3,9 @@ let config = {};
 if (Deno.env.get('TEST_ENVIRONMENT')) {
     config.database = {
     hostname: "hattie.db.elephantsql.com",
-    database: "amzhmgzx",
-    user: "amzhmgzx",
-    password: "8IHzagV76hXtrloENJfBVIS2_QktaXsv",
+    database: "mryzwblt",
+    user: "mryzwblt",
+    password: "odzvfiZHb0T59mckjg89Q4ZHp5AHLS0J",
     port: 5432};
 } else {
     const DATABASE_URL = Deno.env.toObject().DATABASE_URL;
