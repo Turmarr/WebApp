@@ -1,0 +1,25 @@
+<%- include('./partials/header.ejs') %>
+<script src="/static/code.js" defer></script>
+<h2>Register</h2> 
+
+<% if (error) { %>
+    <p><%= error; %> </p>
+<% } %>
+
+<form method="POST" action="/auth/registration">
+
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email">
+
+    <label for="pw">Password</label>
+    <input id="pw" onkeyup="validate()" name="password" type="password">
+
+    <label for="pwr">Repeat your password</label>
+    <input id="pwr" onkeyup="validate()" name="password_r" type="password">
+
+    <p id="error"></p>
+
+    <input id="submit" type="submit" value="Register" disabled>
+</form>
+
+<%- include('./partials/footer.ejs') %> 

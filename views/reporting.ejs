@@ -1,0 +1,19 @@
+<%- include('./partials/header.ejs') %>
+
+<form method="GET" id="time"></form>
+<h2>Reporting</h2>
+<% if (reported.morning) { %>
+  <p>Reporting for this morning has allready been done.</p>
+<% } %>
+<% if (reported.evening) { %>
+  <p>Reporting for this evening hs allready been done.</p>
+<% } %> 
+<% if (!reported.morning && !reported.evening) { %> 
+  <p>No reporting has been done for today.</p>
+<% } %> 
+
+
+<button type="submit" form="time" formaction="/behaviour/reporting/morning">Morning</button>
+<button type="submit" form="time" formaction="/behaviour/reporting/evening">Evening</button>
+
+<%- include('./partials/footer.ejs') %> 
