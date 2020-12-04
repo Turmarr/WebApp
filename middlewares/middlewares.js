@@ -1,3 +1,4 @@
+import {send} from "../deps.js";
 
 const errorMiddleware = async(context, next) => {
     try {
@@ -14,4 +15,29 @@ const requestTimingMiddleware = async({ request }, next) => {
     console.log(`${request.method} ${request.url.pathname} - ${ms} ms`);
 }
 
-export { errorMiddleware, requestTimingMiddleware }
+const serveStaticFilesMiddleware = async(context, next) => {
+  if (context.request.url.pathname.startsWith('/static')) {
+    const path = context.request.url.pathname.substring(7);
+  
+    await send(context, path, {
+      root: `${Deno.cwd()}/static`
+    });
+  
+  } else {
+    await next();
+  }
+}
+
+const checkAuthMiddleware = async({request, response, session}, next) => {
+  if (request.url.pathname.startsWith('/behaviour')) {
+    if (session && await session.get('authenticated')) {
+      await next();
+    } else {
+      response.status = 401;
+    }
+  } else {
+    await next();
+  }
+};
+
+export { errorMiddleware, requestTimingMiddleware, checkAuthMiddleware, serveStaticFilesMiddleware};

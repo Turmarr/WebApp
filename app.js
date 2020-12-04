@@ -9,7 +9,8 @@ const app = new Application();
 const ejsEngine = engineFactory.getEjsEngine();
 const oakAdapter = adapterFactory.getOakAdapter();
 app.use(viewEngine(oakAdapter, ejsEngine, {
-    viewRoot: "./views"
+    viewRoot: "./views",
+    useCache: true
 }));
 
 const session = new Session({ framework: "oak" });
@@ -19,6 +20,8 @@ app.use(session.use()(session));
 
 app.use(middleware.errorMiddleware);
 app.use(middleware.requestTimingMiddleware);
+//app.use(middleware.checkAuthMiddleware);
+app.use(middleware.serveStaticFilesMiddleware);
 
 app.use(router.routes());
 

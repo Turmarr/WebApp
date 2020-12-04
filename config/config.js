@@ -1,6 +1,8 @@
 let config = {};
 
-if (Deno.env.get('TEST_ENVIRONMENT')) {
+const test = true;
+
+if (test) {
     config.database = {
     hostname: "hattie.db.elephantsql.com",
     database: "mryzwblt",
@@ -13,7 +15,7 @@ if (Deno.env.get('TEST_ENVIRONMENT')) {
 }
 
 let port = 7777;
-if (Deno.env.get('TEST_ENVIRONMENT')) {
+if (test) {
     config.port = port;
 } else {
     if (Deno.args.length > 0) {  
