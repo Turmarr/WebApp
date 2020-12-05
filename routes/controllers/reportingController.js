@@ -5,6 +5,7 @@ const reporting = async({render, session}) => {
     //const id = await session.get('id');
     const id = 1;
     const reported = await isReported(today, id);
+    //console.log(reported);
     render('reporting.ejs', {reported: reported});
 }
 
@@ -16,8 +17,8 @@ const evening_get = async({render}) => {
     render('reporting_eve.ejs');
 }
 
-const morning_post = async({request, session, response}) => {
-    
+const morning_post = async({request, session, response}) => {    
+
     const body = request.body();
     const params = await body.value;
 
@@ -28,10 +29,11 @@ const morning_post = async({request, session, response}) => {
     data.sleep_quality = params.get('sleep_quality');
     data.sleep_duration = params.get('sleep_duration');
     data.day = params.get('day');
+    data.mood = params.get('mood');
 
     reportMorning(data);
 
-    response.redirect('/');
+    response.redirect('/behaviour/reporting');
 }
 
 const evening_post = async({request, session, response}) => {
@@ -52,7 +54,7 @@ const evening_post = async({request, session, response}) => {
 
     reportEvening(data);
 
-    response.redirect('/');
+    response.redirect('/behaviour/reporting');
 }
 
 export {morning_get, morning_post, evening_get, evening_post, reporting};

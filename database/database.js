@@ -42,13 +42,12 @@ export { executeCachedQuery };
  * email VARCHAR(320) NOT NULL
  * password CHAR(60) NOT NULL
  * 
- * CREATE UNIQUE INDEX ON users((lower(email)));
- * 
  * morning
  * id SERIAL PRIMARY KEY
  * day DATE NOT NULL
  * sleep_duration FLOAT(3,1) NOT NULL
  * sleep_quality INT NOT NULL
+ * mood INT NOT NULL
  * user_id REFERENCES user(id)
  * 
  * evening
@@ -60,5 +59,9 @@ export { executeCachedQuery };
  * quality_of_eating INT NOT NULL
  * mood INT NOT NULL
  * user_id REFERENCES user(id)
+ * 
+ * CREATE UNIQUE INDEX ON users((lower(email)));
+ * CREATE UNIQUE INDEX ON morning((day));
+ * CREATE UNIQUE INDEX ON evening((day));
  * 
  */
