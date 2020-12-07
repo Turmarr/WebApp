@@ -3,13 +3,18 @@
 <h2>Register</h2> 
 
 <% if (error) { %>
-    <p><%= error; %> </p>
+    <p><%= error.message; %> </p>
 <% } %>
 
 <form method="POST" action="/auth/registration">
 
     <label for="email">Email</label>
-    <input id="email" name="email" type="email">
+    <% if (error) { %>
+        <input id="email" name="email" type="email" value="<%= error.email %>">
+    <% } else { %>
+        <input id="email" name="email" type="email" value="">
+    <% } %> 
+
 
     <label for="pw">Password</label>
     <input id="pw" onkeyup="validate()" name="password" type="password">

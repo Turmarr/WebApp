@@ -23,3 +23,7 @@ const validate = () => {
     document.querySelector('#error').innerHTML = ""
   }
 }
+
+const retEmail = (error) => {
+  document.querySelector('#email').value = error.email;
+}

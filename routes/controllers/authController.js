@@ -11,10 +11,10 @@ const register_post = async({request, session, response}) => {
         password_r: params.get('password_r')
     }
     if (!(await regIsValid(data))) {
-        await session.set('error', "The email was invalid.");
+        await session.set('error',{message: "The email was invalid.", email: data.email});
         response.redirect('/auth/registration');
     } else if (!(await emailExists(data.email))) {
-        await session.set('error', "The email is allready in use.");
+        await session.set('error',{ message:"The email is allready in use.", email: data.email});
         response.redirect('/auth/registration');
     } else {
         await session.set('error', null);
@@ -35,6 +35,7 @@ const register_get = async({session, render}) => {
         data.error = e;
     }
     render('register.ejs', data);
+    session.set('error', null);
 }
 
 const login_post = async({request, response}) => {
