@@ -1,0 +1,26 @@
+<%- include('./partials/header.ejs') %>
+
+
+<h2>Summary</h2>
+<form method="POST" action="/behaviour/summary">
+<label for="week">Week</label>
+<input name="week" id="week" type='week' value="<%= data.year %>-W<%= data.week_nr %>">
+<label for="month">Month</label>
+<input name="month" id="month" type='month' value="<%= data.year %>-<%= data.month_nr %>">
+<input type="submit" value="Search for records">
+</form>
+
+<%- include('./partials/averages.ejs', {
+    data: data.week,
+    title: "Averages for the chosen week",
+    nothing: "No reports for the chosen week"
+}); %> 
+
+<%- include('./partials/averages.ejs', {
+    data: data.month,
+    title: "Averages for the chosen month",
+    nothing: "No reports for the chosen month"
+}); %> 
+
+
+<%- include('./partials/footer.ejs') %> 

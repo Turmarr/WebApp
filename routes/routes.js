@@ -15,7 +15,8 @@ router.post('/behaviour/reporting/morning', reportingController.morning_post);
 router.get('/behaviour/reporting/morning', reportingController.morning_get);
 router.post('/behaviour/reporting/evening', reportingController.evening_post);
 router.get('/behaviour/reporting/evening', reportingController.evening_get);
-router.get('/behaviour/summary', viewsController.summary);
+router.get('/behaviour/summary', viewsController.getSummary);
+router.post('/behaviour/summary', viewsController.postSummary);
 router.get('/', viewsController.main);
 
 router.get('/api/summary');

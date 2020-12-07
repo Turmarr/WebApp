@@ -45,4 +45,39 @@ const addUser = async(email, pw) => {
     executeCachedQuery("INSERT INTO users (email, password) VALUES ($1, $2);", email, pw);
 }
 
-export {reportMorning, reportEvening, isReported, emailExists, addUser};
+const getWeeklyData = async(week, year, id) => {
+    let data = {};
+    const mor = await executeCachedQuery("SELECT CAST((mm + em) AS FLOAT) / (cmm + cem) AS mood from "+
+    "(SELECT SUM(mood) AS mm, Count(mood) AS cmm from morning WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3) AS m,"+
+    "(SELECT SUM(mood) AS em, Count(mood) AS cem from evening WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3) AS e;", id, week, year);
+    data.mood = mor.rowsOfObjects()[0].mood;
+    data.sleep_duration = (await executeCachedQuery("SELECT AVG(sleep_duration) AS sleep FROM morning "+
+    "WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, week, year)).rowsOfObjects()[0].sleep;
+    data.sleep_quality = (await executeCachedQuery("SELECT AVG(sleep_quality) AS sleep FROM morning "+
+    "WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, week, year)).rowsOfObjects()[0].sleep;
+    data.exercise = (await executeCachedQuery("SELECT AVG(exercise) AS ex FROM evening "+
+    "WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, week, year)).rowsOfObjects()[0].ex;
+    data.study = (await executeCachedQuery("SELECT AVG(study_time) AS study FROM evening "+
+    "WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, week, year)).rowsOfObjects()[0].study;
+    return data;
+}
+
+const getMonthlyData = async(month, year, id) => {
+    let data = {};
+    const mor = await executeCachedQuery("SELECT CAST((mm + em) AS FLOAT) / (cmm + cem) AS mood from "+
+    "(SELECT SUM(mood) AS mm, Count(mood) AS cmm from morning WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3) AS m,"+
+    "(SELECT SUM(mood) AS em, Count(mood) AS cem from evening WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3) AS e;", id, month, year);
+    data.mood = mor.rowsOfObjects()[0].mood;
+    data.sleep_duration = (await executeCachedQuery("SELECT AVG(sleep_duration) AS sleep FROM morning "+
+    "WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, month, year)).rowsOfObjects()[0].sleep;
+    data.sleep_quality = (await executeCachedQuery("SELECT AVG(sleep_quality) AS sleep FROM morning "+
+    "WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, month, year)).rowsOfObjects()[0].sleep;
+    data.exercise = (await executeCachedQuery("SELECT AVG(exercise) AS ex FROM evening "+
+    "WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, month, year)).rowsOfObjects()[0].ex;
+    data.study = (await executeCachedQuery("SELECT AVG(study_time) AS study FROM evening "+
+    "WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, month, year)).rowsOfObjects()[0].study;
+    //console.log(data);
+    return data;
+}
+
+export {reportMorning, reportEvening, isReported, emailExists, addUser, getWeeklyData, getMonthlyData};
