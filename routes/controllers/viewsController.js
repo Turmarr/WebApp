@@ -1,8 +1,17 @@
 import {getWeekNumber} from "../../utils/week.js";
-import {getMonthlyData, getWeeklyData} from "../../services/services.js";
+import {getMonthlyData, getWeeklyData, getMoodForDay} from "../../services/services.js";
 
-const main = ({render}) => {
-    render('index.ejs');
+const main = async({render, session}) => {
+    const id = 1
+    const data = {
+        id: id,
+        email: "hi",
+        mood_t: await getMoodForDay(id, new Date()),
+        mood_y: await getMoodForDay(id, new Date((new Date()).valueOf() - 1000*60*60*24))
+    }
+    
+    console.log(data);
+    render('index.ejs', {data: data});
 }
 
 const getSummary = async({render, session}) => {

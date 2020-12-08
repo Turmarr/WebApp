@@ -80,4 +80,22 @@ const getMonthlyData = async(month, year, id) => {
     return data;
 }
 
-export {reportMorning, reportEvening, isReported, emailExists, addUser, getWeeklyData, getMonthlyData};
+const getMoodForDay = async(id, day) => {
+    const mood = [(await executeCachedQuery("SELECT mood from morning WHERE user_id=$1 AND day=$2;", id, day)).rowsOfObjects()[0],
+                (await executeCachedQuery("SELECT mood from evening WHERE user_id=$1 AND day=$2;", id, day)).rowsOfObjects()[0]];
+    let count = 0;
+    let sum = 0;
+    mood.forEach(mood => {
+        if (typeof mood !== "undefined") {
+            count += 1;
+            sum += parseInt(mood.mood);
+        }
+    });
+    if (count === 0) {
+        return null;
+    } else {
+        return sum / count;
+    }
+}
+
+export {reportMorning, getMoodForDay, reportEvening, isReported, emailExists, addUser, getWeeklyData, getMonthlyData};

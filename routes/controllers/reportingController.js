@@ -33,7 +33,7 @@ const morning_post = async({request, session, response}) => {
 
     reportMorning(data);
 
-    response.redirect('/behaviour/reporting');
+    response.redirect('/');
 }
 
 const evening_post = async({request, session, response}) => {
@@ -54,7 +54,7 @@ const evening_post = async({request, session, response}) => {
 
     reportEvening(data);
 
-    response.redirect('/behaviour/reporting');
+    response.redirect('/');
 }
 
 export {morning_get, morning_post, evening_get, evening_post, reporting};

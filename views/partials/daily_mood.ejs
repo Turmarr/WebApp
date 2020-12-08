@@ -1,0 +1,18 @@
+<% if (mood_t) { %>
+    <p>Todays mood so far is: <%= mood_t %> </p> 
+<% } else { %>
+    <p>No mood yet for today.</p>
+<% } %>
+<% if (mood_y) { %>
+    <p>Yesterdays mood was: <%= mood_y %> </p> 
+<% } else { %>
+    <p>No mood data for yesterday.</p>
+<% } %>
+<% if (mood_y && mood_t) { %> 
+    <% if (mood_t > mood_y) { %>
+        <p>Things are looking bright today.</p>
+    <% } %>
+    <% if (mood_y > mood_t) { %>
+        <p>Things are looking gloomy today.</p>
+    <% } %> 
+<% } %> 
