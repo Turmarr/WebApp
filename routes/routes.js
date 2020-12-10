@@ -20,7 +20,7 @@ router.get('/behaviour/summary', viewsController.getSummary);
 router.post('/behaviour/summary', viewsController.postSummary);
 router.get('/', viewsController.main);
 
-router.get('/api/summary', dataApis.getWeek);
+router.get('/api/summary', dataApis.getLast7Days);
 router.get('/api/summary/:year/:month/:day', dataApis.getDay);
 
 export { router };

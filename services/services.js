@@ -102,9 +102,41 @@ const getLogin = async(email) => {
     return await executeQuery("SELECT * FROM users WHERE email=$1", email); 
 }
 
-const getDataForDay = async(day, month, year) => {
-    const date = new Date(year, month, day, 0, 0, 0, 0);
+const getDataForDay = async(date) => {
+    let data = {};
+    const mor = await executeCachedQuery("SELECT CAST((mm + em) AS FLOAT) / (cmm + cem) AS mood from "+
+    "(SELECT SUM(mood) AS mm, Count(mood) AS cmm from morning WHERE day=$1) AS m,"+
+    "(SELECT SUM(mood) AS em, Count(mood) AS cem from evening WHERE day=$1) AS e;", date);
+    data.mood = mor.rowsOfObjects()[0].mood;
+    data.sleep_duration = (await executeCachedQuery("SELECT AVG(sleep_duration) AS sleep FROM morning "+
+    "WHERE day=$1;", date)).rowsOfObjects()[0].sleep;
+    data.sleep_quality = (await executeCachedQuery("SELECT AVG(sleep_quality) AS sleep FROM morning "+
+    "WHERE day=$1;", date)).rowsOfObjects()[0].sleep;
+    data.exercise = (await executeCachedQuery("SELECT AVG(exercise) AS ex FROM evening "+
+    "WHERE day=$1;", date)).rowsOfObjects()[0].ex;
+    data.study = (await executeCachedQuery("SELECT AVG(study_time) AS study FROM evening "+
+    "WHERE day=$1;", date)).rowsOfObjects()[0].study;
+    //console.log(data);
+    return data;
+}
+
+const getDataForInterval = async(start, stop) => {
+    let data = {};
+    const mor = await executeCachedQuery("SELECT CAST((mm + em) AS FLOAT) / (cmm + cem) AS mood from "+
+    "(SELECT SUM(mood) AS mm, Count(mood) AS cmm from morning WHERE day>=$1 AND day<=$2) AS m,"+
+    "(SELECT SUM(mood) AS em, Count(mood) AS cem from evening WHERE day>=$1 AND day<=$2) AS e;", start, stop);
+    data.mood = mor.rowsOfObjects()[0].mood;
+    data.sleep_duration = (await executeCachedQuery("SELECT AVG(sleep_duration) AS sleep FROM morning "+
+    "WHERE day>=$1 AND day<=$2;", start, stop)).rowsOfObjects()[0].sleep;
+    data.sleep_quality = (await executeCachedQuery("SELECT AVG(sleep_quality) AS sleep FROM morning "+
+    "WHERE day>=$1 AND day<=$2;", start, stop)).rowsOfObjects()[0].sleep;
+    data.exercise = (await executeCachedQuery("SELECT AVG(exercise) AS ex FROM evening "+
+    "WHERE day>=$1 AND day<=$2;", start, stop)).rowsOfObjects()[0].ex;
+    data.study = (await executeCachedQuery("SELECT AVG(study_time) AS study FROM evening "+
+    "WHERE day>=$1 AND day<=$2;", start, stop)).rowsOfObjects()[0].study;
+    //console.log(data);
+    return data;
 }
  
 
-export {reportMorning, getMoodForDay, reportEvening, isReported, emailExists, addUser, getWeeklyData, getMonthlyData, getLogin};
+export {reportMorning, getMoodForDay, reportEvening, isReported, emailExists, addUser, getWeeklyData, getMonthlyData, getLogin, getDataForDay, getDataForInterval};
