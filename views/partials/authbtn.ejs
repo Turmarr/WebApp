@@ -1,0 +1,15 @@
+<form id="auth" ></form>
+<% if (!auth.auth) { %> 
+    
+    <% if (login) { %> 
+        <button type="submit" form="auth" formmethod="GET" formaction="/auth/login">Login</button>
+    <% } %> 
+    <% if (register) { %> 
+        <button type="submit" form="auth" formmethod="GET" formaction="/auth/registration">Registration</button>
+    <% } %>
+<% } else { %>
+    <p>
+        You are logged in as <%= auth.user.email %>. 
+        <button type="submit" form="auth" formmethod="POST" formaction="/auth/logout">Logout</button>
+    </p>
+<% } %> 

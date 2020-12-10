@@ -1,0 +1,31 @@
+<%- include('./partials/header.ejs') %>
+
+<script src="/static/reg_help.js" defer></script>
+<h2>Register</h2> 
+
+<% if (error) { %>
+    <p><%= error.message; %> </p>
+<% } %>
+
+<form method="POST" action="/auth/registration">
+
+    <label for="email">Email</label>
+    <% if (error) { %>
+        <input id="email" name="email" type="email" value="<%= error.email %>">
+    <% } else { %>
+        <input id="email" name="email" type="email" value="">
+    <% } %> 
+
+
+    <label for="pw">Password</label>
+    <input id="pw" onkeyup="validate()" name="password" type="password">
+
+    <label for="pwr">Repeat your password</label>
+    <input id="pwr" onkeyup="validate()" name="password_r" type="password">
+
+    <p id="error"></p>
+
+    <input id="submit" type="submit" value="Register" disabled>
+</form>
+<%- include('./partials/nav.ejs', {front: true, reporting: false, summary: false}) %> 
+<%- include('./partials/footer.ejs') %> 

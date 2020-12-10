@@ -1,0 +1,37 @@
+
+
+<% if (data && data.mood) { %>
+    <h3><%= title %> </h3>
+    <table>
+        <tr>
+            <th>Sleep duration</th>
+            <td><%= data.sleep_duration %></td>
+        </tr>
+        <tr>
+            <th>Time spent on sports and exercise</th>
+            <td><%= data.exercise %></td>
+        </tr>
+        <tr>
+            <th>Time spent sudying</th>
+            <td><%= data.study %></td>
+        </tr>
+        <tr>
+            <th>Sleep quality</th>
+            <td><%= data.sleep_quality %></td>
+        </tr>
+        <tr>
+            <th>Regularity of eating</th>
+            <td><%= data.roe %></td>
+        </tr>
+        <tr>
+            <th>Queality of eating</th>
+            <td><%= data.qoe %></td>
+        </tr>
+        <tr>
+            <th>Generic mood</th>
+            <td><%= data.mood %></td>
+        </tr>
+    </table>
+<% } else { %>
+    <p><%= nothing %> </p>
+<% } %>

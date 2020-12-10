@@ -1,0 +1,11 @@
+<form method="GET" id="nav"></form>
+<label>Navigation</label>
+<% if (front) { %> 
+    <button type="submit" form="nav" formaction="/">Front page</button>
+<% } %> 
+<% if (summary) { %> 
+    <button type="submit" form="nav" formaction="/behaviour/summary">Summary</button>
+<% } %>
+<% if (reporting) { %>  
+    <button type="submit" form="nav" formaction="/behaviour/reporting">Reporting</button>
+<% } %> 

@@ -1,0 +1,35 @@
+<%- include('./partials/header.ejs') %>
+
+<form method="GET" id="time"></form>
+
+<h2>Morning</h2>
+<button type="submit" form="time" formaction="/behaviour/reporting">Back</button>
+
+<form method="POST" action="/behaviour/reporting/evening">
+
+    <label for="date">Day</label>
+    <input name="day" id="date" type='date' value="" required>
+    <script type="text/javascript">
+    let today = new Date().toISOString().substr(0, 10);
+    document.querySelector("#date").value = today;
+    </script>
+
+    <label for="e">Time spent exercising</label>
+    <input id="e" name="exercise" type='number' min="0" max="24" required>
+
+    <label for="s">Time spent studying</label>
+    <input id="s" name="study" type='number' min="0" max="24" required>
+
+    <label for="roe">Regularity of eating</label>
+    <input id="roe" name="regularity_of_eating" type='number' step="1" min="1" max="5" required>
+
+    <label for="qoe">Quality of eating</label>
+    <input id="qoe" name="quality_of_eating" type='number' step="1" min="1" max="5" required>
+    
+    <label for="gm">General mood</label>
+    <input id="gm" name="mood" type='number' step="1" min="1" max="5" required>
+    
+    <input type='submit' value="submit">
+</form>
+
+<%- include('./partials/footer.ejs') %>

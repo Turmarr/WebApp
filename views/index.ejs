@@ -1,0 +1,19 @@
+<%- include('./partials/header.ejs') %>
+
+
+<h1>Welcome to activity tracker</h1>
+<p>
+    This application lets you keep track of statistics related to your
+    living. The most important ones are mood, sleep duration and quality,
+    time spent exercising and time spent studying.
+</p>
+
+<p>
+    Reporting is done in the evening and the morning. The software needs for 
+    summaries at least one report in the morning and evening. Otherwise the mood 
+    data won't be generated on the summary page.
+</p>
+
+<%- include('./partials/daily_mood.ejs', {mood_t: mood_t, mood_y: mood_y}) %>
+<%- include('./partials/nav.ejs', {front: false, reporting: auth.auth, summary: auth.auth}) %> 
+<%- include('./partials/footer.ejs') %>

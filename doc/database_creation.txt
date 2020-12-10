@@ -1,0 +1,29 @@
+CREATE TABLE users (
+id SERIAL PRIMARY KEY,
+email VARCHAR(320) NOT NULL,
+password CHAR(60) NOT NULL
+);
+
+CREATE TABLE morning (
+id SERIAL PRIMARY KEY,
+day DATE NOT NULL,
+sleep_duration DEC(3,1) NOT NULL,
+sleep_quality INT NOT NULL,
+mood INT NOT NULL,
+user_id INTEGER REFERENCES users(id)
+);
+
+CREATE TABLE evening (
+id SERIAL PRIMARY KEY,
+day DATE NOT NULL,
+exercise DEC(3,1) NOT NULL,
+study_time DEC(3,1) NOT NULL,
+regularity_of_eating INT NOT NULL,
+quality_of_eating INT NOT NULL,
+mood INT NOT NULL,
+user_id INTEGER REFERENCES users(id)
+);
+
+CREATE UNIQUE INDEX ON users((lower(email)));
+CREATE UNIQUE INDEX ON morning((day));
+CREATE UNIQUE INDEX ON evening((day));
