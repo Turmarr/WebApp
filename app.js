@@ -2,7 +2,7 @@ import { Application, Session, oakCors } from "./deps.js";
 import { viewEngine, engineFactory, adapterFactory } from "./deps.js";
 import { router } from "./routes/routes.js";
 import * as middleware from './middlewares/middlewares.js';
-import { config } from "./config/config.js";
+import { conf } from "./config/config.js";
 
 const app = new Application();
 
@@ -25,4 +25,4 @@ app.use(middleware.serveStaticFilesMiddleware);
 
 app.use(router.routes());
 
-app.listen({port: config.port});
+app.listen({port: conf.port});

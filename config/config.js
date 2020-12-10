@@ -1,28 +1,27 @@
-let config = {};
+import {config} from "../deps.js";
 
-const test = true;
+let conf = {};
 
-if (test) {
-    config.database = {
-    hostname: "hattie.db.elephantsql.com",
-    database: "mryzwblt",
-    user: "mryzwblt",
-    password: "odzvfiZHb0T59mckjg89Q4ZHp5AHLS0J",
-    port: 5432};
+if (Deno.env.get('DATABASE_URL')) {
+    conf.database = Deno.env.get('DATABASE_URL');
 } else {
-    const DATABASE_URL = Deno.env.toObject().DATABASE_URL;
-    config.database = DATABASE_URL;
+    
+    conf.database = {
+        hostname: config().PGHOST,
+        database: config().PGDATABASE,
+        user: config().PGUSER,
+        password: config().PGPASSWORD,
+        port: parseInt(config().PGPORT)
+    };
 }
+  
 
 let port = 7777;
-if (test) {
-    config.port = port;
-} else {
-    if (Deno.args.length > 0) {  
-        const lastArgument = Deno.args[Deno.args.length - 1];  
-        port = Number(lastArgument);
-    }
-    config.port = port;
+if (Deno.args.length > 0) {  
+    const lastArgument = Deno.args[Deno.args.length - 1];  
+    port = Number(lastArgument);
 }
+conf.port = port;
 
-export { config }; 
+
+export { conf }; 
