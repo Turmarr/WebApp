@@ -11,7 +11,6 @@ if (Deno.args.length > 0) {
     const lastArgument = Deno.args[Deno.args.length - 1];  
     port = Number(lastArgument);
 }
-const server = serve({ port: port });
 
 const ejsEngine = engineFactory.getEjsEngine();
 const oakAdapter = adapterFactory.getOakAdapter();
@@ -32,4 +31,4 @@ app.use(middleware.serveStaticFilesMiddleware);
 
 app.use(router.routes());
 
-app.listen({port: conf.port});
+app.listen({port: port});
