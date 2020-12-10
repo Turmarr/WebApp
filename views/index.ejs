@@ -14,6 +14,6 @@
     data won't be generated on the summary page.
 </p>
 
-<%- include('./partials/daily_mood.ejs', {mood_t: mood_t, mood_y: mood_y}) %>
+<%- include('./partials/daily_mood.ejs', {mood_t: mood_t, mood_y: mood_y, auth: auth}) %>
 <%- include('./partials/nav.ejs', {front: false, reporting: auth.auth, summary: auth.auth}) %> 
 <%- include('./partials/footer.ejs') %>
