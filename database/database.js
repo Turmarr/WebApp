@@ -1,7 +1,7 @@
 import { Pool } from "../deps.js";
 import { conf } from "../config/config.js";
 
-const connectionPool = new Client(conf.database, 4);
+const connectionPool = new Pool(conf.database, 4);
 
 let cache = {};
 
