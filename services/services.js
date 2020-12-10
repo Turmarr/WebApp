@@ -47,35 +47,43 @@ const addUser = async(email, pw) => {
 
 const getWeeklyData = async(week, year, id) => {
     let data = {};
-    const mor = await executeCachedQuery("SELECT CAST((mm + em) AS FLOAT) / (cmm + cem) AS mood from "+
+    const mor = await executeCachedQuery("SELECT CAST(CAST((mm + em) AS FLOAT) / (cmm + cem) AS DECIMAL(3,1)) AS mood from "+
     "(SELECT SUM(mood) AS mm, Count(mood) AS cmm from morning WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3) AS m,"+
     "(SELECT SUM(mood) AS em, Count(mood) AS cem from evening WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3) AS e;", id, week, year);
     data.mood = mor.rowsOfObjects()[0].mood;
-    data.sleep_duration = (await executeCachedQuery("SELECT AVG(sleep_duration) AS sleep FROM morning "+
+    data.sleep_duration = (await executeCachedQuery("SELECT CAST(AVG(sleep_duration) AS DECIMAL(3,1)) AS sleep FROM morning "+
     "WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, week, year)).rowsOfObjects()[0].sleep;
-    data.sleep_quality = (await executeCachedQuery("SELECT AVG(sleep_quality) AS sleep FROM morning "+
+    data.sleep_quality = (await executeCachedQuery("SELECT CAST(AVG(sleep_quality) AS DECIMAL(3,1)) AS sleep FROM morning "+
     "WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, week, year)).rowsOfObjects()[0].sleep;
-    data.exercise = (await executeCachedQuery("SELECT AVG(exercise) AS ex FROM evening "+
+    data.exercise = (await executeCachedQuery("SELECT CAST(AVG(exercise) AS DECIMAL(3,1)) AS ex FROM evening "+
     "WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, week, year)).rowsOfObjects()[0].ex;
-    data.study = (await executeCachedQuery("SELECT AVG(study_time) AS study FROM evening "+
+    data.study = (await executeCachedQuery("SELECT CAST(AVG(study_time) AS DECIMAL(3,1)) AS study FROM evening "+
     "WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, week, year)).rowsOfObjects()[0].study;
+    data.roe = (await executeCachedQuery("SELECT CAST(AVG(regularity_of_eating) AS DECIMAL(3,1)) AS roe FROM evening "+
+    "WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, week, year)).rowsOfObjects()[0].roe;
+    data.qoe = (await executeCachedQuery("SELECT CAST(AVG(quality_of_eating) AS DECIMAL(3,1)) AS qoe FROM evening "+
+    "WHERE user_id=$1 AND EXTRACT(WEEK FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, week, year)).rowsOfObjects()[0].qoe;
     return data;
 }
 
 const getMonthlyData = async(month, year, id) => {
     let data = {};
-    const mor = await executeCachedQuery("SELECT CAST((mm + em) AS FLOAT) / (cmm + cem) AS mood from "+
+    const mor = await executeCachedQuery("SELECT CAST(CAST((mm + em) AS FLOAT) / (cmm + cem) AS DECIMAL(3,1)) AS mood from "+
     "(SELECT SUM(mood) AS mm, Count(mood) AS cmm from morning WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3) AS m,"+
     "(SELECT SUM(mood) AS em, Count(mood) AS cem from evening WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3) AS e;", id, month, year);
     data.mood = mor.rowsOfObjects()[0].mood;
-    data.sleep_duration = (await executeCachedQuery("SELECT AVG(sleep_duration) AS sleep FROM morning "+
+    data.sleep_duration = (await executeCachedQuery("SELECT CAST(AVG(sleep_duration) AS DECIMAL(3,1)) AS sleep FROM morning "+
     "WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, month, year)).rowsOfObjects()[0].sleep;
-    data.sleep_quality = (await executeCachedQuery("SELECT AVG(sleep_quality) AS sleep FROM morning "+
+    data.sleep_quality = (await executeCachedQuery("SELECT CAST(AVG(sleep_quality) AS DECIMAL(3,1)) AS sleep FROM morning "+
     "WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, month, year)).rowsOfObjects()[0].sleep;
-    data.exercise = (await executeCachedQuery("SELECT AVG(exercise) AS ex FROM evening "+
+    data.exercise = (await executeCachedQuery("SELECT CAST(AVG(exercise) AS DECIMAL(3,1)) AS ex FROM evening "+
     "WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, month, year)).rowsOfObjects()[0].ex;
-    data.study = (await executeCachedQuery("SELECT AVG(study_time) AS study FROM evening "+
+    data.study = (await executeCachedQuery("SELECT CAST(AVG(study_time) AS DECIMAL(3,1)) AS study FROM evening "+
     "WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, month, year)).rowsOfObjects()[0].study;
+    data.roe = (await executeCachedQuery("SELECT CAST(AVG(regularity_of_eating) AS DECIMAL(3,1)) AS roe FROM evening "+
+    "WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, month, year)).rowsOfObjects()[0].roe;
+    data.qoe = (await executeCachedQuery("SELECT CAST(AVG(quality_of_eating) AS DECIMAL(3,1)) AS qoe FROM evening "+
+    "WHERE user_id=$1 AND EXTRACT(MONTH FROM day)=$2 AND EXTRACT(YEAR FROM day)=$3;", id, month, year)).rowsOfObjects()[0].qoe;
     //console.log(data);
     return data;
 }
@@ -104,36 +112,44 @@ const getLogin = async(email) => {
 
 const getDataForDay = async(date) => {
     let data = {};
-    const mor = await executeCachedQuery("SELECT CAST((mm + em) AS FLOAT) / (cmm + cem) AS mood from "+
+    const mor = await executeCachedQuery("SELECT CAST(CAST((mm + em) AS FLOAT) / (cmm + cem) AS DECIMAL(3,1)) AS mood from "+
     "(SELECT SUM(mood) AS mm, Count(mood) AS cmm from morning WHERE day=$1) AS m,"+
     "(SELECT SUM(mood) AS em, Count(mood) AS cem from evening WHERE day=$1) AS e;", date);
     data.mood = mor.rowsOfObjects()[0].mood;
-    data.sleep_duration = (await executeCachedQuery("SELECT AVG(sleep_duration) AS sleep FROM morning "+
+    data.sleep_duration = (await executeCachedQuery("SELECT CAST(AVG(sleep_duration) AS DECIMAL(3,1)) AS sleep FROM morning "+
     "WHERE day=$1;", date)).rowsOfObjects()[0].sleep;
-    data.sleep_quality = (await executeCachedQuery("SELECT AVG(sleep_quality) AS sleep FROM morning "+
+    data.sleep_quality = (await executeCachedQuery("SELECT CAST(AVG(sleep_quality) AS DECIMAL(3,1)) AS sleep FROM morning "+
     "WHERE day=$1;", date)).rowsOfObjects()[0].sleep;
-    data.exercise = (await executeCachedQuery("SELECT AVG(exercise) AS ex FROM evening "+
+    data.exercise = (await executeCachedQuery("SELECT CAST(AVG(exercise) AS DECIMAL(3,1)) AS ex FROM evening "+
     "WHERE day=$1;", date)).rowsOfObjects()[0].ex;
-    data.study = (await executeCachedQuery("SELECT AVG(study_time) AS study FROM evening "+
+    data.study = (await executeCachedQuery("SELECT CAST(AVG(study_time) AS DECIMAL(3,1)) AS study FROM evening "+
     "WHERE day=$1;", date)).rowsOfObjects()[0].study;
+    data.regularity_of_eating = (await executeCachedQuery("SELECT CAST(AVG(regularity_of_eating) AS DECIMAL(3,1)) AS roe FROM evening "+
+    "WHERE day=$1;", date)).rowsOfObjects()[0].roe;
+    data.quality_of_eating = (await executeCachedQuery("SELECT CAST(AVG(quality_of_eating) AS DECIMAL(3,1)) AS qoe FROM evening "+
+    "WHERE day=$1;", date)).rowsOfObjects()[0].qoe;
     //console.log(data);
     return data;
 }
 
 const getDataForInterval = async(start, stop) => {
     let data = {};
-    const mor = await executeCachedQuery("SELECT CAST((mm + em) AS FLOAT) / (cmm + cem) AS mood from "+
+    const mor = await executeCachedQuery("SELECT CAST(CAST((mm + em) AS FLOAT) / (cmm + cem) AS DECIMAL(3,1)) AS mood from "+
     "(SELECT SUM(mood) AS mm, Count(mood) AS cmm from morning WHERE day>=$1 AND day<=$2) AS m,"+
     "(SELECT SUM(mood) AS em, Count(mood) AS cem from evening WHERE day>=$1 AND day<=$2) AS e;", start, stop);
     data.mood = mor.rowsOfObjects()[0].mood;
-    data.sleep_duration = (await executeCachedQuery("SELECT AVG(sleep_duration) AS sleep FROM morning "+
+    data.sleep_duration = (await executeCachedQuery("SELECT CAST(AVG(sleep_duration) AS DECIMAL(3,1)) AS sleep FROM morning "+
     "WHERE day>=$1 AND day<=$2;", start, stop)).rowsOfObjects()[0].sleep;
-    data.sleep_quality = (await executeCachedQuery("SELECT AVG(sleep_quality) AS sleep FROM morning "+
+    data.sleep_quality = (await executeCachedQuery("SELECT CAST(AVG(sleep_quality) AS DECIMAL(3,1)) AS sleep FROM morning "+
     "WHERE day>=$1 AND day<=$2;", start, stop)).rowsOfObjects()[0].sleep;
-    data.exercise = (await executeCachedQuery("SELECT AVG(exercise) AS ex FROM evening "+
+    data.exercise = (await executeCachedQuery("SELECT CAST(AVG(exercise) AS DECIMAL(3,1)) AS ex FROM evening "+
     "WHERE day>=$1 AND day<=$2;", start, stop)).rowsOfObjects()[0].ex;
-    data.study = (await executeCachedQuery("SELECT AVG(study_time) AS study FROM evening "+
+    data.study = (await executeCachedQuery("SELECT CAST(AVG(study_time) AS DECIMAL(3,1)) AS study FROM evening "+
     "WHERE day>=$1 AND day<=$2;", start, stop)).rowsOfObjects()[0].study;
+    data.regularity_of_eating = (await executeCachedQuery("SELECT CAST(AVG(regularity_of_eating) AS DECIMAL(3,1)) AS roe FROM evening "+
+    "WHERE day>=$1 AND day<=$2;", start, stop)).rowsOfObjects()[0].roe;
+    data.quality_of_eating = (await executeCachedQuery("SELECT CAST(AVG(quality_of_eating) AS DECIMAL(3,1)) AS qoe FROM evening "+
+    "WHERE day>=$1 AND day<=$2;", start, stop)).rowsOfObjects()[0].qoe;
     //console.log(data);
     return data;
 }
