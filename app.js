@@ -2,7 +2,6 @@ import { Application, Session, oakCors } from "./deps.js";
 import { viewEngine, engineFactory, adapterFactory } from "./deps.js";
 import { router } from "./routes/routes.js";
 import * as middleware from './middlewares/middlewares.js';
-import { conf } from "./config/config.js";
 
 const app = new Application();
 
