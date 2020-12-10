@@ -102,4 +102,9 @@ const getLogin = async(email) => {
     return await executeQuery("SELECT * FROM users WHERE email=$1", email); 
 }
 
+const getDataForDay = async(day, month, year) => {
+    const date = new Date(year, month, day, 0, 0, 0, 0);
+}
+ 
+
 export {reportMorning, getMoodForDay, reportEvening, isReported, emailExists, addUser, getWeeklyData, getMonthlyData, getLogin};

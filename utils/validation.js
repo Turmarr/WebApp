@@ -1,4 +1,4 @@
-import {validate, required, isDate, isEmail} from "../deps.js";
+import {validate, required, isDate, isEmail, minLength} from "../deps.js";
 
 
 const dateRule = {

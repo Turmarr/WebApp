@@ -2,6 +2,7 @@ import { Router } from "../deps.js";
 import * as viewsController from "./controllers/viewsController.js";
 import * as reportingController from "./controllers/reportingController.js";
 import * as authController from "./controllers/authController.js";
+import * as dataApis from "./apis/dataApis.js";
 
 const router = new Router();
 
@@ -19,7 +20,7 @@ router.get('/behaviour/summary', viewsController.getSummary);
 router.post('/behaviour/summary', viewsController.postSummary);
 router.get('/', viewsController.main);
 
-router.get('/api/summary');
-router.get('/api/summary/:year/:month/:day');
+router.get('/api/summary', dataApis.getWeek);
+router.get('/api/summary/:year/:month/:day', dataApis.getDay);
 
 export { router };
