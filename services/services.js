@@ -1,4 +1,4 @@
-import { executeCachedQuery } from "../database/database.js";
+import { executeCachedQuery, executeQuery } from "../database/database.js";
 
 const reportMorning = async(info) => {
     await executeCachedQuery("INSERT INTO morning (day, sleep_duration, sleep_quality, mood, user_id)" +
@@ -98,4 +98,8 @@ const getMoodForDay = async(id, day) => {
     }
 }
 
-export {reportMorning, getMoodForDay, reportEvening, isReported, emailExists, addUser, getWeeklyData, getMonthlyData};
+const getLogin = async(email) => {
+    return await executeQuery("SELECT * FROM users WHERE email=$1", email); 
+}
+
+export {reportMorning, getMoodForDay, reportEvening, isReported, emailExists, addUser, getWeeklyData, getMonthlyData, getLogin};

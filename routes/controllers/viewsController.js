@@ -1,26 +1,37 @@
 import {getWeekNumber} from "../../utils/week.js";
 import {getMonthlyData, getWeeklyData, getMoodForDay} from "../../services/services.js";
+import { getLoginStatus } from "../../utils/get_login_status.js";
 
 const main = async({render, session}) => {
-    const id = 1
+    const auth = await getLoginStatus(session);
+    //console.log(auth);
     const data = {
-        id: id,
-        email: "hi",
-        mood_t: await getMoodForDay(id, new Date()),
-        mood_y: await getMoodForDay(id, new Date((new Date()).valueOf() - 1000*60*60*24))
+        auth: auth,
+        mood_t: null,
+        mood_y: null,
+        login: true,
+        register: true
+    }
+    if (data.auth.auth !== null) {
+        data.mood_t = await getMoodForDay(auth.user.id, new Date());
+        data.mood_y = await getMoodForDay(auth.user.id, new Date((new Date()).valueOf() - 1000*60*60*24));
     }
     
-    console.log(data);
-    render('index.ejs', {data: data});
+    //console.log(data);
+    render('index.ejs', data);
 }
 
 const getSummary = async({render, session}) => {
+    const auth = await getLoginStatus(session);
     const dates = await session.get('dates');
     const time = getWeekNumber(new Date())
     let data = {
+        auth: auth,
         year: time[0],
         week_nr: time[1],
         month_nr: new Date().getMonth() + 1,
+        login: false,
+        register: false
     }
 
     if (dates) {
@@ -29,11 +40,11 @@ const getSummary = async({render, session}) => {
         data.month_nr = dates.month;
     }
     
-    data.week = await getWeeklyData(data.week_nr, data.year, 1);
-    data.month = await getMonthlyData(data.month_nr, data.year, 1);
+    data.week = await getWeeklyData(data.week_nr, data.year, auth.user.id);
+    data.month = await getMonthlyData(data.month_nr, data.year, auth.user.id);
     await session.set('dates', null);
     //console.log(data);
-    render('summary.ejs', {data: data});
+    render('summary.ejs', data);
 }
 
 const postSummary = async({request, session, response}) => {

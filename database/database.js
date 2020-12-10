@@ -32,7 +32,7 @@ const executeCachedQuery = async(query, ...params) => {
   return res;
 }
 
-export { executeCachedQuery };
+export { executeCachedQuery, executeQuery };
 
 /**
  * Database schema

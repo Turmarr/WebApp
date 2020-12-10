@@ -1,20 +1,35 @@
 import {reportMorning, reportEvening, isReported} from "../../services/services.js"
+import { getLoginStatus } from "../../utils/get_login_status.js";
 
 const reporting = async({render, session}) => {
     const today = new Date();
-    //const id = await session.get('id');
-    const id = 1;
-    const reported = await isReported(today, id);
+    const data = {
+        auth: await getLoginStatus(session),
+        reported: null,
+        login: false,
+        register: false
+    };
+    data.reported = await isReported(today, data.auth.user.id);
     //console.log(reported);
-    render('reporting.ejs', {reported: reported});
+    render('reporting.ejs', data);
 }
 
-const morning_get = async({render}) => {
-    render('reporting_mor.ejs');
+const morning_get = async({render, session}) => {
+    const data = {
+        auth: await getLoginStatus(session),
+        login: false,
+        register: false
+    };
+    render('reporting_mor.ejs', data);
 }
 
-const evening_get = async({render}) => {
-    render('reporting_eve.ejs');
+const evening_get = async({render, session}) => {
+    const data = {
+        auth: await getLoginStatus(session),
+        login: false,
+        register: false
+    };    
+    render('reporting_eve.ejs', data);
 }
 
 const morning_post = async({request, session, response}) => {    
@@ -24,8 +39,7 @@ const morning_post = async({request, session, response}) => {
 
     let data = {};
 
-    //data.id = await session.get('id');
-    data.id = 1;
+    data.id = (await getLoginStatus(session)).user.id;
     data.sleep_quality = params.get('sleep_quality');
     data.sleep_duration = params.get('sleep_duration');
     data.day = params.get('day');
@@ -43,8 +57,7 @@ const evening_post = async({request, session, response}) => {
 
     let data = {};
 
-    //data.id = await session.get('id');
-    data.id = 1;
+    data.id = (await getLoginStatus(session)).user.id;
     data.exercise = params.get('exercise');
     data.study = params.get('study');
     data.regularity_of_eating = params.get('regularity_of_eating');

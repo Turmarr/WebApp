@@ -7,8 +7,8 @@ const dateRule = {
 
 const authRule = {
     email: [required, isEmail],
-    password: [required],
-    password_r: [required]
+    password: [required, minLength(4)],
+    password_r: [required, minLength(4)]
 }
 
 const dateIsValid = async(date) => {

@@ -30,10 +30,11 @@ const serveStaticFilesMiddleware = async(context, next) => {
 
 const checkAuthMiddleware = async({request, response, session}, next) => {
   if (request.url.pathname.startsWith('/behaviour')) {
-    if (session && await session.get('authenticated')) {
+    if (session && await session.get('auth')) {
       await next();
     } else {
       response.status = 401;
+      response.redirect('/');
     }
   } else {
     await next();
