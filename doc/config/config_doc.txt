@@ -1,0 +1,11 @@
+#general
+
+Configures the database credentials and the port that
+the app listens to.
+
+Database credentials are read from env variables and use normally a .env file.
+If there is a env called DATABASE_URL it is used instead of the many smaller
+parts.
+
+The port is set to default to 7777 and if in the run call are more arguments it
+uses the last of them. Mainly important for deployment to heroku.

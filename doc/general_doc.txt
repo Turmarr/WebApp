@@ -1,0 +1,36 @@
+#instructions on running the program
+
+after creating the required database tables with the info found in
+doc/database/database_creation.txt the information of the database
+must be inputted into a .env file with the following statements
+    PGPORT=port
+    PGDATABASE=database
+    PGHOST=host
+    PGUSER=user
+    PGPASSWORD=password
+
+
+The app is run from the command line with the following statement:
+
+deno run --allow-env --allow-net --allow-read --unstable app.js
+
+#testing
+
+The test are run against my test database and as such the values are off.
+In the documentation dedicated to testing is information what it is tested against.
+
+Firstly set a anviromental variable TEST=true.
+
+Second run the following from the command line:
+
+deno test --allow-env --allow-net --allow-read --unstable
+
+after settting the env variable the command window might not be usable for 
+normal usage of the app.
+
+Sometimes on the first time the tests are run some fail due to resources not being cleaned up,
+but if the tests are run again all pass, at least on my system.
+
+#deployed
+
+The app can be found at: https://webcourseproject.herokuapp.com

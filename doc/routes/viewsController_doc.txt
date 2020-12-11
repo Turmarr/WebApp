@@ -1,0 +1,34 @@
+#general
+
+Functions are related to the root page and the summary page.
+
+#main
+
+Displays the root page. Uses getMoodForDay twice to get the mood data for 
+today and yesterday.
+
+#getSummary
+
+Displays the summary page.
+
+If in the session 'dates' is set to other than null reads the default values
+for the selectors from the session. Otherwise uses last month and week as the
+default values. Should take into consideration how the year changes. Year
+values are different for month and week.
+
+After reading the dates values sets the session variable 'dates' to null.
+
+Uses functions getWeeklyData and getMonthlyData.
+
+#postSummary
+
+Recieves the week and month data from the selectors and sets in the session
+the variable 'dates', into which it transfers the data.
+
+Does not check the validity of the data, as the forms are for months and
+weeks. Due to this Mozzilla Firefox is currently not supported as it
+does not support month and week input types, instead converts them to text.
+It is still possible to use Mozzilla but care has to be taken to input
+the data correctly.
+
+After that redirects back to the page.

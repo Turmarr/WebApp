@@ -1,0 +1,16 @@
+#general
+
+Function run on the client side connected to the behaviour of the registration
+site.
+
+#validate
+
+Checks the password and the repeat password fields.
+
+As long as the password is under 4 characters displays an error with the
+text: The password must be at least 4 characters long!
+
+As long as the first criteria is matched and the passwords don't match it
+displays: The passwords don't match.
+
+After both criteria are met it enables the submit button and displays no text.

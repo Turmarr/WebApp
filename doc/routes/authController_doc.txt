@@ -1,0 +1,57 @@
+#general
+
+The functions in the file authController.js are all related to authenticating
+and registering the user, including logout.
+
+#register_post
+
+Recieves the information of the registration form.
+
+Verifies that the data is a valid registration with the regIsValid function
+(utils). If the validation fails it redirects the response back to the
+registration page with to the session added a variable "error" which contains
+the email and a message: "The email was invalid.". 
+
+After verifying the input data it verifies if there is the same email allready
+in the system. On finding the email it redirects to the same page while 
+setting an variable to the session with the name error containing the email
+and the message: "The email is allready in use.".
+
+If both tests pass the password is hashed and the hash and email are added to
+the "users" table. After adding the data the page redirects to the root page.
+
+The redirect does not work in testing mode as the redirect broke the tests.
+
+#login_get
+
+Renders the login page and displays any errors that are set in the session.
+After reading the session variables sets the value of error to null.
+
+#regiser_get
+
+Displays the registration form. If the session has a variable error set reads
+the information from it and displays it on the form, basically if there was a
+problem with the registration it displays the appropriate message and populates
+the email field. There are no hints about passwords messing up, as
+during filling out the form the function validate verifies that the passwords
+are as expected, but still the passwords are also validated as otherwise 
+it could be possible to sneak a shorter password inside via command line.
+
+#login_post
+
+Recieves the information from the login form.
+
+Verifies that the email is in the database and the password given matches the
+hash in the database. If either of them fail it sets an error into the session
+with the message: "Invalid email or password"and redirects back to the 
+login page.
+
+If the password and email are correct it sets in the session the 'auth'=true
+and 'user'={email: email, id: id}, After which it redirects back to the root
+page.
+
+The redirect does not work in testing mode as the redirect broke the tests.
+
+#logout
+
+Sets the information of 'auth' and 'user' to null in the session.

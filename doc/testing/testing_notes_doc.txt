@@ -1,0 +1,47 @@
+#general
+
+Some information on the tests in the different files.
+
+#validation_test.js
+
+Tests that validate that the regIsValid function works correctly.
+Does not break with a change in database.
+
+#get_login_status_test.js
+
+Verifies the working of the function getLoginStatus.
+Does not break with a change in database.
+
+#middlewares_test.js
+
+Verifies that the checkAuthMiddleware works correctly and redirects any
+unauthorized users back to root.
+Does not break with a change in database.
+
+#dataApis_test.js
+
+Check that the output of the dataApi is correct for the days output.
+Will break on a change in the database as it expects certain values.
+
+Contains 3 tests:
+1 when there is data from the morning and evening
+1 where only from one of the two
+1 where there is no data
+
+#reportingController_test.js
+
+Checks that after logging in the user can access the reporting site.
+Will break due to the login changin.
+
+#viewsController_test.js
+
+Verifies that the root page is shown without authorisation and the summary page
+after authorisation.
+Will break due to the login changin.
+
+#authController_test.js
+
+Verifies that users can access the registration and login pages without
+authorisation. Also verifies the different error paths the login and
+registration views may take. Verifies that after logging in the summary
+button appears on the root path.

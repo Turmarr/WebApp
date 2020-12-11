@@ -3,7 +3,7 @@ import { executeCachedQuery, executeQuery } from "../database/database.js";
 const reportMorning = async(info) => {
     await executeCachedQuery("INSERT INTO morning (day, sleep_duration, sleep_quality, mood, user_id)" +
                                 "VALUES ($1, $2, $3, $4, $5)"+
-                                "ON CONFLICT (day)"+
+                                "ON CONFLICT (day, user_id)"+
                                 "DO UPDATE SET sleep_duration=EXCLUDED.sleep_duration, sleep_quality=EXCLUDED.sleep_quality, mood=EXCLUDED.mood",
                         info.day, info.sleep_duration, info.sleep_quality, info.mood, info.id);
     
@@ -12,7 +12,7 @@ const reportMorning = async(info) => {
 const reportEvening = async(info) => {
     await executeCachedQuery("INSERT INTO evening (day, exercise, study_time, regularity_of_eating, quality_of_eating, mood, user_id) "+
                             "VALUES ($1, $2, $3, $4, $5, $6, $7)"+
-                            "ON CONFLICT (day)"+
+                            "ON CONFLICT (day, user_id)"+
                             "DO UPDATE SET exercise=EXCLUDED.exercise, study_time=EXCLUDED.study_time, regularity_of_eating=EXCLUDED.regularity_of_eating, quality_of_eating=EXCLUDED.quality_of_eating, mood=EXCLUDED.mood;",
                     info.day, info.exercise, info.study, info.quality_of_eating, info.quality_of_eating, info.mood, info.id);
 }

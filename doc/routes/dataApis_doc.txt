@@ -1,0 +1,12 @@
+#general
+
+Returns json data based on the request path.
+Cross-origin requests are allowed.
+
+#getLast7Days
+
+Uses the getDataForInterval function to get the data for the last 7 days.
+
+#getDay
+
+Uses the getDataForDay function to get data for the specified day.

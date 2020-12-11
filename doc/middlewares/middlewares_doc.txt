@@ -1,0 +1,27 @@
+#general
+
+Four functions handeling different features
+    -logging errors
+    -logging requests
+    -serving static files
+    -checking authentication when requesting path '/behaviour'
+
+#errorMiddleware
+
+Logs any errors that appear in the app.
+
+#requestLoggingMiddleware
+
+Logs all requests with
+time initiated, request method, path, user, time utilized for the request
+
+User is the user id for authenticated users and anonymous for everyone else.
+
+#serveStaticFilesMiddleware
+
+Serves the files located in /static
+
+#checkAuthMiddleware
+
+Checks if the user is authenticated if trying to access the /behaviour path,
+which is the only non public path.

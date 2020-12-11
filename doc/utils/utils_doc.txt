@@ -1,0 +1,20 @@
+#general
+
+For the utils folder each separate file contains a helper function. Or a
+a combination of a few regarding the same functionality.
+
+#week.js
+
+Recieves a date and returns the weeknumber and year.
+
+#validation.js
+
+Functions using a validations library. The dateIsValid function is not used
+anymore, but it is left there if it is needed at some point in the future.
+
+The function regIsValid validates the data from a registration attempt.
+
+#get_login_status.js
+
+Contains the function getloginStatus which recieves a session as parameter and
+return the authentication data it has, or null.

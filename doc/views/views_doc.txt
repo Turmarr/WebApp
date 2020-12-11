@@ -1,0 +1,29 @@
+#general
+
+Information about common patterns in the views.
+
+#navigation buttons
+
+The navigation buttons are a partial that takes three parameters. Based on 
+them it shows only certain buttons.
+
+#login/logout/register
+
+The login/register/logout buttons are all part of the same partial that takes 
+the authentication information as a parameter and shows either the buttons
+for login/registration or "You are logged in as ${email}" and the logout
+button.
+
+#Form fields.
+
+All the form fields verify themselves that the input matches the required
+format. For example and integer between 1 and 5 and cannot be empty.
+
+#CSS
+
+The miligram css is through a cdn
+
+#Scripts
+
+There are some scripts inserted into some of the views.
+

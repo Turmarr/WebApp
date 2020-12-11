@@ -1,0 +1,26 @@
+#general
+
+Functions related to reporting and the reporting views.
+
+#reporting
+
+Shows the reporting view where one chooses do they want to report morning or
+evening data. 
+
+#morning_get
+
+Displays the form to input morning data.
+
+#evening_get
+
+Displays the form to input evening data.
+
+#morning_post
+
+Transfers all of the data to the function reportMorning from the form,
+after which redirects to the root page.
+
+#evening_post
+
+Transfers all of the data to the function reportEvening from the form,
+after which redirects to the root page.

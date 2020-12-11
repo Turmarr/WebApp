@@ -1,4 +1,4 @@
-#statements for creating the database
+#statements needed for creating the database
 
 CREATE TABLE users (
 id SERIAL PRIMARY KEY,
@@ -27,5 +27,5 @@ user_id INTEGER REFERENCES users(id)
 );
 
 CREATE UNIQUE INDEX ON users((lower(email)));
-CREATE UNIQUE INDEX ON morning((day));
-CREATE UNIQUE INDEX ON evening((day));
+CREATE UNIQUE INDEX morning_list ON morning(day, user_id);
+CREATE UNIQUE INDEX evening_list ON evening(day, user_id);

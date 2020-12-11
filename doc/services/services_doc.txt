@@ -1,0 +1,64 @@
+#general
+
+Calls the specific queries associated to the function calls.
+
+All mathematic operations of all functions except getMoodForDay are done
+strictly inside the database. 
+
+#reportMorning
+
+Inserts the data supplied to the table "morning".
+
+#reportEvening
+
+Inserts the data supplied to the table "evening".
+
+If there is allready 
+
+#isReported
+
+Checks if a user has reported something on a specific day. Returns an object
+with the keys morning and evening with the values of the row id in the
+corresponding table or null if nothing was found in the table.
+
+#emailExists
+
+Checks if the given email exists in the database users. Returns true or false.
+
+#addUser
+
+Inserts the data supplied to the table "users".
+
+#getWeeklyData
+
+Gets the weekly averages of a user for the specified week. Due to the
+implementation of the database the mood value will be null if there is no data
+for the specified time in one of the tables.
+
+#getMonthlyData
+
+Gets the montly avarages of a user for the specified month. Due to the
+implementation of the database the mood value will be null if there is no data
+for the specified time in one of the tables.
+
+#getMoodForDay
+
+Gets the mood data of a user for a given day. Due to the data being null if
+morning or evening has not been reported for the day the function calculates
+the average for the day instead of asking the database to calculate it.
+
+#getLogin
+
+Returns the row for the user with the specified email from "users".
+
+#getDataForDay
+
+Returns the average information of all users for a single day. Due to the
+implementation of the database the mood value will be null if there is no data
+for the specified time in one of the tables.
+
+#getDataForInterval
+
+Returns the average information of all users for a given time period.Due to the
+implementation of the database the mood value will be null if there is no data
+for the specified time in one of the tables.

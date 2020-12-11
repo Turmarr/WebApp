@@ -1,2 +1,19 @@
 #doc for database.js
 
+#general
+Defines a connection pool to the database set in the configuration with a
+maximum of 4 connections at the same time.
+
+Runs all of the queries in the database.
+
+#executeQuery
+
+The actual function that asks the queries. Returns the return value of the 
+query or null. In the case of an error logs it to the console.
+
+#executeCachedQuery
+
+Utilises executeQuery to ask the queries but also caches the queries so, that
+if a recurring query is done the time to responde is shorter.
+
+On a query starting with "INSERT" it clears the cache.
