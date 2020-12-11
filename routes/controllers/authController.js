@@ -13,10 +13,15 @@ const register_post = async({request, session, response}) => {
     }
     if (!(await regIsValid(data))) {
         await session.set('error',{message: "The email was invalid.", email: data.email});
-        response.redirect('/auth/registration');
+        if (!Deno.env.get('TEST')) {
+            response.redirect('/auth/registration');
+        }
     } else if (!(await emailExists(data.email))) {
         await session.set('error',{ message:"The email is allready in use.", email: data.email});
-        response.redirect('/auth/registration');
+        if (!Deno.env.get('TEST')) {
+            response.redirect('/auth/registration');
+        }
+        
     } else {
         await session.set('error', null);
         const hash = await bcrypt.hash(data.password);
@@ -71,7 +76,7 @@ const login_post = async({request, session, response}) => {
     }
 
     const userObj = login.rowsOfObjects()[0];
-
+    //console.log(userObj);
     const hash = userObj.password;
 
     const passwordCorrect = await bcrypt.compare(password, hash);
@@ -87,10 +92,13 @@ const login_post = async({request, session, response}) => {
         email: userObj.email,
         id: userObj.id
     });
+    //console.log("hi");
     
-    
-    response.redirect('/');
+    if (!Deno.env.get('TEST')) {
+        response.redirect('/');
+    }
 }
+    
 
 const logout = async({session, response}) => {
     await session.set('auth', null);

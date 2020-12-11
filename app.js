@@ -25,4 +25,8 @@ app.use(middleware.serveStaticFilesMiddleware);
 
 app.use(router.routes());
 
-app.listen({port: conf.port});
+if (!Deno.env.get('TEST')) {
+    app.listen({ port: conf.port });
+}
+
+export {app};

@@ -65,7 +65,7 @@ const getSummary = async({render, session}) => {
     if (data.week_nr < 10) {
         data.week_nr = "0"+ data.week_nr.toString();
     }
-    console.log(data);
+    //console.log(data);
     render('summary.ejs', data);
 }
 

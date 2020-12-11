@@ -7,3 +7,4 @@ export { assertEquals } from "https://deno.land/std@0.78.0/testing/asserts.ts";
 export * as bcrypt from "https://deno.land/x/bcrypt@v0.2.4/mod.ts";
 export { oakCors } from "https://deno.land/x/cors@v1.2.1/mod.ts";
 export { config } from "https://deno.land/x/dotenv/mod.ts";
+export { superoak } from "https://deno.land/x/superoak@2.3.1/mod.ts";
