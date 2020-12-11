@@ -1,5 +1,5 @@
 import {assertEquals} from "../deps.js";
-import {regIsValid} from "./validation.js";
+import {regIsValid} from "../utils/validation.js";
 
 Deno.test("shold pass", async() => {
     const data = {
