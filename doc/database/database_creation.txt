@@ -1,3 +1,5 @@
+#statements for creating the database
+
 CREATE TABLE users (
 id SERIAL PRIMARY KEY,
 email VARCHAR(320) NOT NULL,
