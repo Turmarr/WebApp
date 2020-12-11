@@ -10,3 +10,5 @@ Currently deployed onto heroku under the address:
 https://webcourseproject.herokuapp.com/
 #### Dependecies?
 Uses Deno version 1.5.4
+
+Requires a database to run and currently using postgresql. Create table statements in the documentation.
